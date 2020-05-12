@@ -1,6 +1,7 @@
 # django-fullstack-boilerplate
 __Stop Starting__
-A boilerplate example for starting a Django/React app more quickly.
+
+A project skeleton for creating a Django/React app more quickly.
 
 The technology stack:
 - Django
