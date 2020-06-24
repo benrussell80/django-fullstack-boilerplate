@@ -7,6 +7,9 @@ import axios from 'axios';
 
 
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+axios.defaults.xsrfCookieName = 'csrftoken';
+axios.defaults.xsrfHeaderName = 'X-CSRFTOKEN';
+
 
 ReactDOM.render(
   <React.StrictMode>

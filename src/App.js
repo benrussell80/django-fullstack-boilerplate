@@ -10,7 +10,6 @@ import BlogRoutes from './blog/routes';
 const App = (props) => {
   return (
     <div id="main">
-      {/* <Navigation /> */}
       <div id="content">
         <Switch>
           {/* {AccountsRoutes} */}
@@ -18,7 +17,6 @@ const App = (props) => {
           {ErrorRoutes}
         </Switch>
       </div>
-      {/* <Footer /> */}
     </div>
   );
 }

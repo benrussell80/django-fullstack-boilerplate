@@ -35,18 +35,17 @@ DEBUG = os.environ.get('DEBUG', False) == 'True'
 
 ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1', '0.0.0.0', '[::1]']
 
-SECURE_SSL_REDIRECT = not DEBUG  # django dev server does not support HTTPS
+# SECURE_SSL_REDIRECT = not DEBUG  # django dev server does not support HTTPS
 # SECURE_HSTS_SECONDS = not DEBUG
 # SESSION_COOKIE_SECURE = not DEBUG
 # CSRF_COOKIE_SECURE = not DEBUG
 # SECURE_REFERRER_POLICY = 'same-origin'
-CSRF_COOKIE_SECURE = not DEBUG
-CSRF_COOKIE_HTTPONLY = DEBUG
 
 # Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
+    'django.contrib.admindocs',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -77,6 +76,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.admindocs.middleware.XViewMiddleware',
 
     # 3rd party
     'corsheaders.middleware.CorsPostCsrfMiddleware',
@@ -89,7 +89,6 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR, 'templates'),
             os.path.join(BASE_DIR, 'build'),
         ],
         'APP_DIRS': True,
@@ -217,23 +216,25 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 # CSRF
-CSRF_TRUSTED_ORIGINS = [
-    'localhost:3000',
-    '127.0.0.1:3000',
-    '0.0.0.0:3000',
-    'http://localhost:3000',
-    'http://127.0.0.1:3000',
-    'http://0.0.0.0:3000',
-    'https://localhost:3000',
-    'https://127.0.0.1:3000',
-    'https://0.0.0.0:3000',
-    'localhost:8000',
-    '127.0.0.1:8000',
-    '0.0.0.0:8000',
-    'localhost:8000',
-    '127.0.0.1:8000',
-    '0.0.0.0:8000',
-]
+# CSRF_TRUSTED_ORIGINS = [
+#     'localhost:3000',
+#     '127.0.0.1:3000',
+#     '0.0.0.0:3000',
+#     'http://localhost:3000',
+#     'http://127.0.0.1:3000',
+#     'http://0.0.0.0:3000',
+#     'https://localhost:3000',
+#     'https://127.0.0.1:3000',
+#     'https://0.0.0.0:3000',
+#     'localhost:8000',
+#     '127.0.0.1:8000',
+#     '0.0.0.0:8000',
+#     'localhost:8000',
+#     '127.0.0.1:8000',
+#     '0.0.0.0:8000',
+# ]
+
+
 
 # Django Storages
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'

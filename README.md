@@ -50,7 +50,7 @@ get_random_secret_key()
 ```
 
 ## Optional Environment Variables
-- `DEBUG` (will default to false-y)
+- `DEBUG` (will default to False in `settings.py` if not set, for security reasons)
 
 # Example Development Workflow
 - Create app (e.g. polls, blog, etc.) with django-admin startapp

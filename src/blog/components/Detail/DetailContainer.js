@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Detail } from '.';
 import { withRouter } from 'react-router-dom';
-import { NoMatch } from "../../../errors/components";
+import { NoMatch } from '../../../errors/components';
+import { Loading } from '../../../common/components/Loading'
 
 
 class DetailContainer extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      error: null,
+      loaded: false,
+      errors: null,
+      loadingMoreComments: false,
       id: '',
       author: {
         username: '',
@@ -46,7 +49,10 @@ class DetailContainer extends Component {
               numberOfLikes
               published
               publishedAt
-              comments {
+              comments(first: 5) {
+                pageInfo {
+                  hasNextPage
+                }
                 edges {
                   node {
                     id
@@ -66,7 +72,8 @@ class DetailContainer extends Component {
       variables: { slug: this.state.slug }
     })
       .then(response => {
-        this.setState({ ...response.data.data.post.edges[0].node });
+        this.setState({ loaded: true })
+        this.setState({ ...response.data.data.posts.edges[0].node });
       })
       .catch(error => {
         this.setState({ error });
@@ -74,14 +81,22 @@ class DetailContainer extends Component {
   }
 
   loadMoreComments() {
+    console.log('Loading more comments');
+    this.setState({ loadingMoreComments: true })
+    
     // function for loading more comments with relay pagination
   }
 
   render() {
-    if (this.state.published && this.state.error === null) {
+    if (this.state.loaded === false) {
+      document.title = 'Loading...';
+      return (
+        <Loading />
+      )
+    } else if (this.state.published) {
       document.title = this.state.title === '' ? this.state.slug : this.state.title;
       return (
-        <Detail {...this.state} />
+        <Detail {...this.state} loadMoreComments={this.loadMoreComments} />
       )
     } else {
       document.title = 'No Match';
